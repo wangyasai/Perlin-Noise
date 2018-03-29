@@ -1,0 +1,162 @@
+<!-- Hello, This is a simple particles emision tool that can generate different shapes through the controls.
+ I hope you like this tool,have fuuuuuun:)-->
+
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title>Perlin Noise</title>
+<meta name="description" content="">
+<meta name="keywords" content="">
+<link href="" rel="stylesheet">
+
+ <!-- Global site tag (gtag.js) - Google Analytics -->
+<!-- <script async src="https://www.googletagmanager.com/gtag/js?id=UA-109829527-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-109829527-1');
+</script> -->
+ 
+ 
+
+<link rel="icon" href="image/1.ico" type="image/x-icon">
+<link rel="shortcut icon" href="image/1.ico" type="image/x-icon">
+
+<script type="text/javascript" src="js/dat.gui.min.js"></script>
+<script type="text/javascript" src="js/p5.min.js"></script>
+<script type="text/javascript" src="js/gif.js"></script>
+<script type="text/javascript" src="js/p5.dom.min.js"></script>
+
+
+<input id="img-path" type="file" />
+
+<style type="text/css">
+  *{
+    margin:0;
+    padding:0;
+  }
+
+#credits {
+  font-size: 12px;
+  position: absolute;
+  bottom: 15px;
+  right: 15px;
+  opacity: 0.8;
+  color: #939393;
+  max-width: 70%;
+  text-align: right;
+}
+
+#img-path {
+    display: none;
+}
+.progress-box{
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+}
+.progress-bar{
+  height: 3px;
+  width: 0%;
+  background-color: #e61d5f;
+}
+.save-gif-tip{
+  display: none;
+  margin-bottom: 5px;
+  text-align: center;
+  font-size: 16px;
+  color: white;
+}
+</style>
+</head>
+<body>
+
+<div id="credits"> Created by  <a href = "https://weibo.com/psaiaevegas/profile?rightmod=1&wvr=6&mod=personnumber" target="_blank" style="color: #939393;">@亚赛大人</a>  |  <a href = "http://yasaisai.tumblr.com/archive" target="_blank" style="color: #939393;"> Tumblr Arhive </a> </div>
+<script type="text/javascript">
+
+var type;
+var options ={  
+  Background : [10,10,10],
+  Color1 : [255,255,255],
+  Color2 : [7,153,242],
+  Color3 : [69,33,124],
+  Length : 10,
+  Nums : 200,
+  MaxRadius : 1,
+  MinRadius : 1,
+  noiseScale: 800,
+  ColorScheme : 'Normal',
+  Gradient: false,
+  Random: function () { 
+          options.Color1 = [random(0,255),random(0,255),random(0,255)];
+          options.Color2 = [random(0,255),random(0,255),random(0,255)];
+          options.Color3 = [random(0,255),random(0,255),random(0,255)];
+          options.Speed = random(0.1,0.4); 
+        },
+
+  Save : function(){
+    saveFrames("Perlin Noise", "png", 1, 1);
+  },
+}
+
+
+var text, gui, config;
+window.onload = function() {
+  gui = new dat.GUI();
+
+  //folder1
+  var folder1 = gui.addFolder('Controls');
+
+  var bgcolorControl = folder1.addColor(options, 'Background');
+  bgcolorControl.onChange(draw);
+
+  var shapeControl = folder1.add(options, 'ColorScheme', ['Normal','Warm', 'Black'] );
+
+  var GradientControl = folder1.add(options, 'Gradient');
+  GradientControl.onChange(draw);
+
+  var color1Control = folder1.addColor(options, 'Color1');
+  color1Control.onChange(draw);
+
+  var color2Control = folder1.addColor(options, 'Color2');
+  color2Control.onChange(draw);
+
+  var color2Control = folder1.addColor(options, 'Color3');
+  color2Control.onChange(draw);
+
+  var noiseControl = folder1.add(options, 'noiseScale',10,5000);
+  noiseControl.onChange(draw);
+
+  var LengthControl = folder1.add(options, 'Length',0.1,50);
+  LengthControl.onChange(draw);
+
+  var NumsControl = folder1.add(options, 'Nums',100,1500);
+  NumsControl.onChange(draw);
+
+  var RadiusControl = folder1.add(options, 'MaxRadius',1,5);
+  RadiusControl.onChange(draw);
+
+  var RadiusControl = folder1.add(options, 'MinRadius',1,5);
+  RadiusControl.onChange(draw);
+
+  var RandomControl = folder1.add(options, 'Random');
+
+  var SaveControl = folder1.add(options, 'Save');
+
+  folder1.open();
+};
+
+
+</script>
+
+<script type="text/javascript" src="js/sketch.js"></script>
+</body>
+
+</html>
+
