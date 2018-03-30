@@ -28,19 +28,13 @@ function draw(){
         fadeRatio = min(particles[i].life * 5 / maxLife, 1);
         fadeRatio = min((maxLife - particles[i].life) * 5 / maxLife, fadeRatio);
         var lifeRatioGrayscale = min(255, (255 * particles[i].life / maxLife) + red(backgroundColor));
-        if(options.ColorScheme == 'Normal'){     
+        if(options.ColorMode == 'Normal'){     
             if(i%3==0)particleColor = options.Color1;
             if(i%3==1)particleColor = options.Color2;
             if(i%3==2)particleColor = options.Color3;
-        }else if(options.ColorScheme == 'Black'){ 
-            particleColor = color(lifeRatioGrayscale, alpha * fadeRatio);
-        }else if(options.ColorScheme == 'Warm-1'){
-             particleColor = color(blue(particles[i].color) + 70, green(particles[i].color) + 20, red(particles[i].color) - 50);
         }
 
-
-
-        if(options.Gradient == true){
+        if(options.ColorMode == 'Linera Gradient'){
              var percent1 = norm(particles[i].pos.x,0,width/2);
              var percent2 = norm(particles[i].pos.x,width/2,width);
              from = color(options.Color1);
@@ -53,35 +47,50 @@ function draw(){
             }else{
                 particleColor = between2;   
             }    
-        }   
- 
+        }  
+
+        if(options.ColorMode == 'Radial Gradient'){
+             var distance = dist(particles[i].pos.x ,particles[i].pos.y, width/2, height/2);
+             var percent1 = norm(distance,0,400);
+             var percent2 = norm(distance,200,width/2);
+             from = color(options.Color1);
+             middle = color(options.Color2);
+             to = color(options.Color3);
+             between1 = lerpColor(from, middle, percent1);
+             between2 = lerpColor(middle, to, percent2);
+             if(distance < 400){
+                particleColor = between1;
+            }else{
+                particleColor = between2;   
+            }    
+        }  
+
+        if(options.ColorMode == 'Splice'){ 
+            if(particles[i].pos.x >=width/3 && particles[i].pos.x <= width/3*2){
+                if(i%3==0)particleColor = options.Color1;
+                if(i%3==1)particleColor = options.Color2;
+                if(i%3==2)particleColor = options.Color3;
+            }else if(particles[i].pos.x < width/3 ){
+                if(i%3==0)particleColor = 20;
+                if(i%3==1)particleColor = 100;
+                if(i%3==2)particleColor = 220;
+            }else if(particles[i].pos.x > width/3*2 ){
+                if(i%3==0)particleColor = color(255-red(options.Color1),255-green(options.Color1),255-blue(options.Color1));
+                if(i%3==1)particleColor = color(255-red(options.Color2),255-green(options.Color2),255-blue(options.Color2));
+                if(i%3==2)particleColor = color(255-red(options.Color3),255-green(options.Color3),255-blue(options.Color3));
+            }
+        }
+
         fill(red(particleColor), green(particleColor), blue(particleColor), alpha * fadeRatio);
         particles[i].display(radius);
     } 
 }
 
 function Particle(){
-// member properties and initialization
     this.vel = createVector(0, 0);
-    this.pos = createVector(random(0, width), random(0, height));
+    this.pos = createVector(random(-50, width+50), random(-50, height+50));
     this.life = random(0, maxLife);
-    var randColor = int(random(0,3));
-
-    switch(randColor)
-    {
-        case 0:
-            this.color = color(options.Color1);
-            break;
-        case 1:
-            this.color = color(options.Color2);
-            break;
-        case 2:
-            this.color = color(options.Color3);
-            break;
-    }
-
     
-// member functions
     this.move = function(iterations){
         if((this.life -= 0.01666) < 0)
             this.respawn();
@@ -102,8 +111,8 @@ function Particle(){
     }
     
     this.respawn = function(){
-        this.pos.x = random(0, width);
-        this.pos.y = random(0, height);
+        this.pos.x = random(-50, width+50);
+        this.pos.y = random(-50, height+50);
         this.life = maxLife;
     }
 
