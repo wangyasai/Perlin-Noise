@@ -52,7 +52,7 @@ function draw(){
         if(options.ColorMode == 'Radial Gradient'){
              var distance = dist(particles[i].pos.x ,particles[i].pos.y, width/2, height/2);
              var percent1 = norm(distance,0,400);
-             var percent2 = norm(distance,200,width/2);
+             var percent2 = norm(distance,400,width/2);
              from = color(options.Color1);
              middle = color(options.Color2);
              to = color(options.Color3);
