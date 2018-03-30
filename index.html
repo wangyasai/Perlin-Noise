@@ -8,6 +8,18 @@
 <meta name="keywords" content="">
 <link href="" rel="stylesheet">
 
+ <!-- Global site tag (gtag.js) - Google Analytics -->
+<!-- <script async src="https://www.googletagmanager.com/gtag/js?id=UA-109829527-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-109829527-1');
+</script> -->
+ 
+ 
+
 <link rel="icon" href="image/1.ico" type="image/x-icon">
 <link rel="shortcut icon" href="image/1.ico" type="image/x-icon">
 
@@ -71,7 +83,7 @@ var options ={
   Color2 : '#0799f2',
   Color3 : '#45217c',
   Length : 10,
-  Nums : 200,
+  Nums : 400,
   MaxRadius : 2,
   MinRadius : 2,
   noiseScale: 800,
@@ -122,13 +134,13 @@ window.onload = function() {
   var LengthControl = folder1.add(options, 'Length',0.1,50);
   LengthControl.onChange(draw);
 
-  var NumsControl = folder1.add(options, 'Nums',100,1500);
+  var NumsControl = folder1.add(options, 'Nums',100,2500);
   NumsControl.onChange(draw);
 
-  var RadiusControl = folder1.add(options, 'MaxRadius',0.5,5);
+  var RadiusControl = folder1.add(options, 'MaxRadius',1,5);
   RadiusControl.onChange(draw);
 
-  var RadiusControl = folder1.add(options, 'MinRadius',0.5,5);
+  var RadiusControl = folder1.add(options, 'MinRadius',1,5);
   RadiusControl.onChange(draw);
 
   var RandomControl = folder1.add(options, 'Random');
