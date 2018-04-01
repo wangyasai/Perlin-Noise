@@ -1,130 +1,154 @@
-var particles = [];
-var maxLife;
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title>Perlin Noise</title>
+<meta name="description" content="">
+<meta name="keywords" content="">
+<link href="" rel="stylesheet">
 
 
-function setup(){
-    backgroundColor = color(options.Background);
-    createCanvas(windowWidth, windowHeight);
-    background(options.Background);
-    for(var i = 0; i < 2500; i++){
-        particles[i] = new Particle();
-    }
+<link rel="icon" href="image/1.ico" type="image/x-icon">
+<link rel="shortcut icon" href="image/1.ico" type="image/x-icon">
+
+<script type="text/javascript" src="js/dat.gui.min.js"></script>
+<script type="text/javascript" src="js/p5.min.js"></script>
+<script type="text/javascript" src="js/gif.js"></script>
+<script type="text/javascript" src="js/p5.dom.min.js"></script>
+
+
+<input id="img-path" type="file" />
+
+<style type="text/css">
+  *{
+    margin:0;
+    padding:0;
+  }
+
+#credits {
+  font-size: 12px;
+  position: absolute;
+  bottom: 15px;
+  right: 15px;
+  opacity: 0.8;
+  color: #939393;
+  max-width: 70%;
+  text-align: right;
 }
 
-function draw(){
-    noStroke();
-    smooth();  
-    maxLife = options.Length;
-    for(var i = 1; i < options.Nums; i++){
-        var iterations = map(i,0,options.Nums,5,1);
-        var radius = map(i,0,options.Nums,options.MinRadius,options.MaxRadius);
-        
-        particles[i].move(iterations);
-        particles[i].checkEdge();
-        
-        var alpha = 255;
-        var particleColor;
-        var fadeRatio;
-        fadeRatio = min(particles[i].life * 5 / maxLife, 1);
-        fadeRatio = min((maxLife - particles[i].life) * 5 / maxLife, fadeRatio);
-        var lifeRatioGrayscale = min(255, (255 * particles[i].life / maxLife) + red(backgroundColor));
-        if(options.ColorMode == 'Normal'){     
-            if(i%3==0)particleColor = options.Color1;
-            if(i%3==1)particleColor = options.Color2;
-            if(i%3==2)particleColor = options.Color3;
-        }
+#img-path {
+    display: none;
+}
+.progress-box{
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+}
+.progress-bar{
+  height: 3px;
+  width: 0%;
+  background-color: #e61d5f;
+}
+.save-gif-tip{
+  display: none;
+  margin-bottom: 5px;
+  text-align: center;
+  font-size: 16px;
+  color: white;
+}
+</style>
+</head>
+<body>
 
-        if(options.ColorMode == 'Linera Gradient'){
-             var percent1 = norm(particles[i].pos.x,0,width/2);
-             var percent2 = norm(particles[i].pos.x,width/2,width);
-             from = color(options.Color1);
-             middle = color(options.Color2);
-             to = color(options.Color3);
-             between1 = lerpColor(from, middle, percent1);
-             between2 = lerpColor(middle, to, percent2);
-             if(particles[i].pos.x > 0 && particles[i].pos.x <width/2){
-                particleColor = between1;
-            }else{
-                particleColor = between2;   
-            }    
-        }  
+<div id="credits"> Created by  <a href = "https://weibo.com/psaiaevegas/profile?rightmod=1&wvr=6&mod=personnumber" target="_blank" style="color: #939393;">@亚赛大人</a>  |  <a href = "http://yasaisai.tumblr.com" target="_blank" style="color: #939393;"> Tumblr Arhive </a> </div>
+<script type="text/javascript">
 
-        if(options.ColorMode == 'Radial Gradient'){
-             var distance = dist(particles[i].pos.x ,particles[i].pos.y, width/2, height/2);
-             var percent1 = norm(distance,0,400);
-             var percent2 = norm(distance,400,width/2);
-             from = color(options.Color1);
-             middle = color(options.Color2);
-             to = color(options.Color3);
-             between1 = lerpColor(from, middle, percent1);
-             between2 = lerpColor(middle, to, percent2);
-             if(distance < 400){
-                particleColor = between1;
-            }else{
-                particleColor = between2;   
-            }    
-        }  
-
-        if(options.ColorMode == 'Splice'){ 
-            if(particles[i].pos.x >=width/3 && particles[i].pos.x <= width/3*2){
-                if(i%3==0)particleColor = options.Color1;
-                if(i%3==1)particleColor = options.Color2;
-                if(i%3==2)particleColor = options.Color3;
-            }else if(particles[i].pos.x < width/3 ){
-                if(i%3==0)particleColor = 20;
-                if(i%3==1)particleColor = 100;
-                if(i%3==2)particleColor = 220;
-            }else if(particles[i].pos.x > width/3*2 ){
-                if(i%3==0)particleColor = color(255-red(options.Color1),255-green(options.Color1),255-blue(options.Color1));
-                if(i%3==1)particleColor = color(255-red(options.Color2),255-green(options.Color2),255-blue(options.Color2));
-                if(i%3==2)particleColor = color(255-red(options.Color3),255-green(options.Color3),255-blue(options.Color3));
-            }
-        }
-
-        fill(red(particleColor), green(particleColor), blue(particleColor), alpha * fadeRatio);
-        particles[i].display(radius);
-    } 
+var type;
+var options ={  
+  Background : '#0a0a0a',
+  Color1 : '#ffffff',
+  Color2 : '#0799f2',
+  Color3 : '#45217c',
+  Length : 10,
+  Nums : 400,
+  MaxRadius : 2,
+  MinRadius : 2,
+  noiseScale: 800,
+  ColorMode : 'Normal',
+  Random: function () { 
+          background(options.Background);
+          options.Color1 = [random(0,255),random(0,255),random(0,255)];
+          options.Color2 = [random(0,255),random(0,255),random(0,255)];
+          options.Color3 = [random(0,255),random(0,255),random(0,255)];
+          options.Length = random(1,50); 
+          options.Nums = random(200,1000); 
+          options.noiseScale = random(200,4000); 
+          options.MaxRadius = random(1,10); 
+          options.MinRadius = random(1,10); 
+          options.ColorMode = random(['Normal','Linera Gradient','Splice']);
+        },
 }
 
-function Particle(){
-    this.vel = createVector(0, 0);
-    this.pos = createVector(random(-50, width+50), random(-50, height+50));
-    this.life = random(0, maxLife);
-    
-    this.move = function(iterations){
-        if((this.life -= 0.01666) < 0)
-            this.respawn();
-        while(iterations > 0){
-            var angle = noise(this.pos.x/options.noiseScale, this.pos.y/options.noiseScale)*TWO_PI*options.noiseScale;
-            this.vel.x = cos(angle);
-            this.vel.y = sin(angle);
-            this.vel.mult(0.2);
-            this.pos.add(this.vel);
-            --iterations;
+
+var text, gui, config;
+window.onload = function() {
+  document.getElementById('defaultCanvas0').onmousedown = function(e) {
+        // 阻止默认行为并取消冒泡
+        if(typeof e.preventDefault === 'function') {
+            e.preventDefault();
+            e.stopPropagation();
+        }else {
+            e.returnValue = false;
+            e.cancelBubble = true;
         }
     }
+  gui = new dat.GUI();
 
-    this.checkEdge = function(){
-        if(this.pos.x > width || this.pos.x < 0 || this.pos.y > height || this.pos.y < 0){
-            this.respawn();
-        }
-    }
-    
-    this.respawn = function(){
-        this.pos.x = random(-50, width+50);
-        this.pos.y = random(-50, height+50);
-        this.life = maxLife;
-    }
+  //folder1
+  var folder1 = gui.addFolder('Controls');
 
-    this.display = function(r){
-        ellipse(this.pos.x, this.pos.y, r, r);
-    }
-}
+  var bgcolorControl = folder1.addColor(options, 'Background');
+  bgcolorControl.onChange(draw);
 
-function touchStarted(){
-    background(options.Background);
-    for(var i = 0; i < options.Nums; i++){
-        particles[i].respawn();
-        particles[i].life = random(0,maxLife);
-    }
-}
+  var shapeControl = folder1.add(options, 'ColorMode', ['Normal','Linera Gradient','Radial Gradient','Splice'] );
+
+  var color1Control = folder1.addColor(options, 'Color1');
+  color1Control.onChange(draw);
+
+  var color2Control = folder1.addColor(options, 'Color2');
+  color2Control.onChange(draw);
+
+  var color2Control = folder1.addColor(options, 'Color3');
+  color2Control.onChange(draw);
+
+  var noiseControl = folder1.add(options, 'noiseScale',10,5000);
+  noiseControl.onChange(draw);
+
+  var LengthControl = folder1.add(options, 'Length',0.1,50);
+  LengthControl.onChange(draw);
+
+  var NumsControl = folder1.add(options, 'Nums',100,2500);
+  NumsControl.onChange(draw);
+
+  var RadiusControl = folder1.add(options, 'MaxRadius',1,5);
+  RadiusControl.onChange(draw);
+
+  var RadiusControl = folder1.add(options, 'MinRadius',1,5);
+  RadiusControl.onChange(draw);
+
+  var RandomControl = folder1.add(options, 'Random');
+
+  folder1.open();
+};
+
+
+
+</script>
+
+<script type="text/javascript" src="js/sketch.js"></script>
+</body>
+
+</html>
+
