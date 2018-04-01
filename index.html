@@ -8,17 +8,6 @@
 <meta name="keywords" content="">
 <link href="" rel="stylesheet">
 
- <!-- Global site tag (gtag.js) - Google Analytics -->
-<!-- <script async src="https://www.googletagmanager.com/gtag/js?id=UA-109829527-1"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'UA-109829527-1');
-</script> -->
- 
- 
 
 <link rel="icon" href="image/1.ico" type="image/x-icon">
 <link rel="shortcut icon" href="image/1.ico" type="image/x-icon">
@@ -100,10 +89,6 @@ var options ={
           options.MinRadius = random(1,10); 
           options.ColorMode = random(['Normal','Linera Gradient','Splice']);
         },
-
-  Save : function(){
-    saveFrames("Perlin Noise", "png", 1, 1);
-  },
 }
 
 
@@ -154,8 +139,6 @@ window.onload = function() {
   RadiusControl.onChange(draw);
 
   var RandomControl = folder1.add(options, 'Random');
-
-  var SaveControl = folder1.add(options, 'Save');
 
   folder1.open();
 };
