@@ -90,7 +90,6 @@ var options ={
           options.MinRadius = random(1,5); 
           options.ColorMode = random(['Normal','Linera Gradient','Splice']);
           
-
           // color1
           var color1 = rgbToHex(Math.floor(options.Color1[0]),Math.floor(options.Color1[1]),Math.floor(options.Color1[2]));
           color1Control.setValue(color1);
@@ -102,13 +101,6 @@ var options ={
             //color3
           var color3 = rgbToHex(Math.floor(options.Color3[0]),Math.floor(options.Color3[1]),Math.floor(options.Color3[2]));
           color3Control.setValue(color3);
-
-          noiseControl.setValue(options.noiseScale);
-          LengthControl.setValue(options.Length);
-          NumsControl.setValue(options.Nums);
-          RMaxControl.setValue(options.MaxRadius);
-          RMinControl.setValue(options.MinRadius);
-          shapeControl.setValue(options.ColorMode);
         },
 }
 
@@ -136,6 +128,7 @@ window.onload = function() {
   bgcolorControl.onChange(draw);
 
   shapeControl = folder1.add(options, 'ColorMode', ['Normal','Linera Gradient','Radial Gradient','Splice'] );
+  shapeControl.listen();
 
   color1Control = folder1.addColor(options, 'Color1');
   color1Control.onChange(draw);
@@ -148,20 +141,26 @@ window.onload = function() {
 
   noiseControl = folder1.add(options, 'noiseScale',10,5000);
   noiseControl.onChange(draw);
+  noiseControl.listen();
 
   LengthControl = folder1.add(options, 'Length',0.1,50);
   LengthControl.onChange(draw);
+  LengthControl.listen();
 
   NumsControl = folder1.add(options, 'Nums',100,2500);
   NumsControl.onChange(draw);
+  NumsControl.listen();
 
   RMaxControl = folder1.add(options, 'MaxRadius',1,5);
   RMaxControl.onChange(draw);
+  RMaxControl.listen();
 
   RMinControl = folder1.add(options, 'MinRadius',1,5);
   RMinControl.onChange(draw);
+  RMinControl.listen();
 
   RandomControl = folder1.add(options, 'Random');
+  //RandomControl.listen();
 
   folder1.open();
 };
