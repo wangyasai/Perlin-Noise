@@ -11,8 +11,9 @@
 
 <link rel="icon" href="image/1.ico" type="image/x-icon">
 <link rel="shortcut icon" href="image/1.ico" type="image/x-icon">
-<!-- <link rel="stylesheet" type="text/css" href="fonts.css"> -->
- 
+
+<link rel="stylesheet" type="text/css" href="fonts.css">
+
 <script type="text/javascript" src="js/dat.gui.min.js"></script>
 <script type="text/javascript" src="js/p5.min.js"></script>
 <script type="text/javascript" src="js/gif.js"></script>
@@ -62,9 +63,23 @@
 </style>
 </head>
 <body>
-<div id="credits"> Created by  <a href = "https://weibo.com/psaiaevegas/profile?rightmod=1&wvr=6&mod=personnumber" target="_blank" style="color: #939393;">@亚赛大人</a>  |  <a href = "https://www.instagram.com/yasaisai/" target="_blank" style="color: #939393;"> Instagram </a> </div>
 
- <script type="text/javascript">
+
+ <div id="credits"> 
+
+    <div class ="iconlink"> 
+      <div class = "socaial">
+        <span><a class="icon-weibo" href="https://weibo.com/psaiaevegas/profile?rightmod=1&wvr=6&mod=personnumber"  target="_blank"  data-icon="&#xe906;" ></a></span>
+        <span><a class="icon-zhihu" href="https://www.zhihu.com/people/wang-ya-sai/activities"  target="_blank"  data-icon="&#xe907;"></a></span>
+        <span><a class="icon-instagram" href="http://instagram.com/yasaisai"  target="_blank"  data-icon="&#xe903;"></a></span>
+        <span><a class="icon-twitter" href="https://twitter.com/yasai_wang"  target="_blank"  data-icon="&#xe905;"></a></span>
+      </div>
+      <div class = "socaial" style="color:#FFFFFF;font-size: 10pt; margin-right:10px;margin-top: -180px">Created by @yasai </div>
+    </div>
+  </div>
+
+<script type="text/javascript">
+
 var type;
 var options ={  
   Background : '#0a0a0a',
@@ -79,34 +94,20 @@ var options ={
   ColorMode : 'Normal',
   Random: function () { 
           background(options.Background);
-          noiseSeed(Math.random())
           options.Color1 = [random(0,255),random(0,255),random(0,255)];
           options.Color2 = [random(0,255),random(0,255),random(0,255)];
           options.Color3 = [random(0,255),random(0,255),random(0,255)];
           options.Length = random(1,50); 
           options.Nums = random(200,1000); 
           options.noiseScale = random(200,4000); 
-          options.MaxRadius = random(1,5); 
-          options.MinRadius = random(1,5); 
+          options.MaxRadius = random(1,10); 
+          options.MinRadius = random(1,10); 
           options.ColorMode = random(['Normal','Linera Gradient','Splice']);
-          
-          // color1
-          var color1 = rgbToHex(Math.floor(options.Color1[0]),Math.floor(options.Color1[1]),Math.floor(options.Color1[2]));
-          color1Control.setValue(color1);
-
-          //color2
-          var color2 = rgbToHex(Math.floor(options.Color2[0]),Math.floor(options.Color2[1]),Math.floor(options.Color2[2]));
-          color2Control.setValue(color2);
-
-            //color3
-          var color3 = rgbToHex(Math.floor(options.Color3[0]),Math.floor(options.Color3[1]),Math.floor(options.Color3[2]));
-          color3Control.setValue(color3);
         },
 }
 
 
 var text, gui, config;
-var color1Control,color2Control,color3Control,noiseControl,LengthControl,NumsControl,RMaxControl,RMinControl,RandomControl,shapeControl;
 window.onload = function() {
   document.getElementById('defaultCanvas0').onmousedown = function(e) {
         // 阻止默认行为并取消冒泡
@@ -120,62 +121,43 @@ window.onload = function() {
     }
   gui = new dat.GUI();
 
-
   //folder1
   var folder1 = gui.addFolder('Controls');
 
   var bgcolorControl = folder1.addColor(options, 'Background');
   bgcolorControl.onChange(draw);
 
-  shapeControl = folder1.add(options, 'ColorMode', ['Normal','Linera Gradient','Radial Gradient','Splice'] );
-  shapeControl.listen();
+  var shapeControl = folder1.add(options, 'ColorMode', ['Normal','Linera Gradient','Radial Gradient','Splice'] );
 
-  color1Control = folder1.addColor(options, 'Color1');
+  var color1Control = folder1.addColor(options, 'Color1');
   color1Control.onChange(draw);
 
-  color2Control = folder1.addColor(options, 'Color2');
+  var color2Control = folder1.addColor(options, 'Color2');
   color2Control.onChange(draw);
 
-  color3Control = folder1.addColor(options, 'Color3');
-  color3Control.onChange(draw);
+  var color2Control = folder1.addColor(options, 'Color3');
+  color2Control.onChange(draw);
 
-  noiseControl = folder1.add(options, 'noiseScale',10,5000);
+  var noiseControl = folder1.add(options, 'noiseScale',10,5000);
   noiseControl.onChange(draw);
-  noiseControl.listen();
 
-  LengthControl = folder1.add(options, 'Length',0.1,50);
+  var LengthControl = folder1.add(options, 'Length',0.1,50);
   LengthControl.onChange(draw);
-  LengthControl.listen();
 
-  NumsControl = folder1.add(options, 'Nums',100,2500);
+  var NumsControl = folder1.add(options, 'Nums',100,2500);
   NumsControl.onChange(draw);
-  NumsControl.listen();
 
-  RMaxControl = folder1.add(options, 'MaxRadius',1,5);
-  RMaxControl.onChange(draw);
-  RMaxControl.listen();
+  var RadiusControl = folder1.add(options, 'MaxRadius',1,5);
+  RadiusControl.onChange(draw);
 
-  RMinControl = folder1.add(options, 'MinRadius',1,5);
-  RMinControl.onChange(draw);
-  RMinControl.listen();
+  var RadiusControl = folder1.add(options, 'MinRadius',1,5);
+  RadiusControl.onChange(draw);
 
-  RandomControl = folder1.add(options, 'Random');
-  //RandomControl.listen();
+  var RandomControl = folder1.add(options, 'Random');
 
   folder1.open();
 };
 
-
-
-//rgb to hex颜色转换
-function componentToHex(c) {
-    var hex = c.toString(16);
-    return hex.length == 1 ? "0" + hex : hex;
-}
-
-function rgbToHex(r, g, b) {
-    return "#" + componentToHex(r) + componentToHex(g) + componentToHex(b);
-}
 
 
 </script>
