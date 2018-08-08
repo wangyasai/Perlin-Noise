@@ -1,6 +1,6 @@
 # Perlin Noise
 
-![](https://github.com/wangyasai/Perlin-Noise/blob/gh-pages/image/1.jpg)   
+![](https://github.com/wangyasai/Perlin-Noise/blob/gh-pages/image/perlinnoise.jpg)   
 ![](https://github.com/wangyasai/Perlin-Noise/blob/gh-pages/image/1.gif)   
 ![](https://github.com/wangyasai/Perlin-Noise/blob/gh-pages/image/3.gif)     
 ![](https://github.com/wangyasai/Perlin-Noise/blob/gh-pages/image/2.jpg)  
