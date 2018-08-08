@@ -45,7 +45,7 @@
 
 
 ## 联系我
-+ 微博:[@亚赛大人](https://weibo.com/psaiaevegas/home?topnav=1&wvr=6)
++ 微博:[@亚赛大人](https://weibo.com/psaiaevegas/profile?rightmod=1&wvr=6&mod=personnumber)
 + 知乎:[@亚赛大人](https://www.zhihu.com/people/wang-ya-sai/activities)
 + instagram:[@yasai_wang](https://www.instagram.com/yasaisai/)
 + twitter:[@yasai_wang](https://twitter.com/yasai_wang)
