@@ -1,71 +1,83 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-<title>Perlin Noise</title>
-<meta name="description" content="">
-<meta name="keywords" content="">
-<link href="" rel="stylesheet">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Perlin Noise</title>
+  <meta name="description" content="">
+  <meta name="keywords" content="">
+  <link href="" rel="stylesheet">
 
 
-<link rel="icon" href="image/1.ico" type="image/x-icon">
-<link rel="shortcut icon" href="image/1.ico" type="image/x-icon">
+  <link rel="icon" href="image/1.ico" type="image/x-icon">
+  <link rel="shortcut icon" href="image/1.ico" type="image/x-icon">
 
-<link rel="stylesheet" type="text/css" href="fonts.css">
+  <link rel="stylesheet" type="text/css" href="fonts.css">
 
-<script type="text/javascript" src="js/dat.gui.min.js"></script>
-<script type="text/javascript" src="js/p5.min.js"></script>
-<script type="text/javascript" src="js/gif.js"></script>
-<script type="text/javascript" src="js/p5.dom.min.js"></script>
-
-
-<input id="img-path" type="file" />
-
-<style type="text/css">
-  *{
-    margin:0;
-    padding:0;
-  }
+  <script type="text/javascript" src="js/dat.gui.min.js"></script>
+  <script type="text/javascript" src="js/p5.min.js"></script>
+  <script type="text/javascript" src="js/gif.js"></script>
+  <script type="text/javascript" src="js/p5.dom.min.js"></script>
 
 
-  #credits {
-    font-size: 12px;
-    position: absolute;
-    bottom: -25px;
-    right: 15px;
-    opacity: 0.6;
-    color: #ffffff;
-    max-width: 70%;
-    text-align: right;
-    line-height: 20px;
-  }
+  <input id="img-path" type="file" />
+
+  <style type="text/css">
+    *{
+      margin:0;
+      padding:0;
+    }
+
+
+    #credits {
+      font-size: 12px;
+      position: absolute;
+      bottom: -25px;
+      right: 15px;
+      opacity: 0.6;
+      color: #ffffff;
+      max-width: 70%;
+      text-align: right;
+      line-height: 20px;
+    }
     .logo {
-    font-size: 12px;
-    position: absolute;
-    bottom: 80px;
-    left: 25px;
-    color: #ffffff;
-    max-width: 70%;
-    line-height: 20px;
-    opacity: 0.7;
-  }
+      font-size: 12px;
+      position: absolute;
+      bottom: 80px;
+      left: 25px;
+      color: #ffffff;
+      max-width: 70%;
+      line-height: 20px;
+      opacity: 0.7;
+    }
 
-.iconlink{
-  bottom: 50px;
-  margin-right: 0px;
- }
- #img-path {
-  display: none;
-}
+    .iconlink{
+      bottom: 50px;
+      margin-right: 0px;
+    }
+    #img-path {
+      display: none;
+    }
 
-</style>
+  </style>
+
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?44f8fa2f0b239ea3093628142486b48a";
+      var s = document.getElementsByTagName("script")[0]; 
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
 </head>
+
 <body>
 
-    
+  
  <div id="credits"> 
-    <div class = "socaial" style="margin-right:10px">Created by @Yasai</div>
+  <div class = "socaial" style="margin-right:10px">Created by @Yasai</div>
   <div class = "socaial" style="margin-right:10px; margin-bottom: -40px">©️All my products may be used in both personal and commercial projects   </div>
   <div class ="iconlink"> 
     <span><a class="icon-weibo" href="https://weibo.com/psaiaevegas/profile?rightmod=1&wvr=6&mod=personnumber"  target="_blank"  data-icon="&#xe906;" ></a></span>
@@ -78,46 +90,46 @@
 <div class = "logo" style="margin-left:10px; margin-bottom: -40px; "><a href = "https://wangyasai.github.io/designtools.html"><img src="logo.png" style ="width: 40px"></a></div>
 <script type="text/javascript">
 
-var type;
-var options ={  
-  Background : '#0a0a0a',
-  Color1 : '#ffffff',
-  Color2 : '#0799f2',
-  Color3 : '#45217c',
-  Length : 10,
-  Nums : 400,
-  MaxRadius : 2,
-  MinRadius : 2,
-  noiseScale: 800,
-  ColorMode : 'Normal',
-  Random: function () { 
-          background(options.Background);
-          options.Color1 = [random(0,255),random(0,255),random(0,255)];
-          options.Color2 = [random(0,255),random(0,255),random(0,255)];
-          options.Color3 = [random(0,255),random(0,255),random(0,255)];
-          options.Length = random(1,50); 
-          options.Nums = random(200,1000); 
-          options.noiseScale = random(200,4000); 
-          options.MaxRadius = random(1,10); 
-          options.MinRadius = random(1,10); 
-          options.ColorMode = random(['Normal','Linera Gradient','Splice']);
-        },
-}
+  var type;
+  var options ={  
+    Background : '#0a0a0a',
+    Color1 : '#ffffff',
+    Color2 : '#0799f2',
+    Color3 : '#45217c',
+    Length : 10,
+    Nums : 400,
+    MaxRadius : 2,
+    MinRadius : 2,
+    noiseScale: 800,
+    ColorMode : 'Normal',
+    Random: function () { 
+      background(options.Background);
+      options.Color1 = [random(0,255),random(0,255),random(0,255)];
+      options.Color2 = [random(0,255),random(0,255),random(0,255)];
+      options.Color3 = [random(0,255),random(0,255),random(0,255)];
+      options.Length = random(1,50); 
+      options.Nums = random(200,1000); 
+      options.noiseScale = random(200,4000); 
+      options.MaxRadius = random(1,10); 
+      options.MinRadius = random(1,10); 
+      options.ColorMode = random(['Normal','Linera Gradient','Splice']);
+    },
+  }
 
 
-var text, gui, config;
-window.onload = function() {
-  document.getElementById('defaultCanvas0').onmousedown = function(e) {
+  var text, gui, config;
+  window.onload = function() {
+    document.getElementById('defaultCanvas0').onmousedown = function(e) {
         // 阻止默认行为并取消冒泡
         if(typeof e.preventDefault === 'function') {
-            e.preventDefault();
-            e.stopPropagation();
+          e.preventDefault();
+          e.stopPropagation();
         }else {
-            e.returnValue = false;
-            e.cancelBubble = true;
+          e.returnValue = false;
+          e.cancelBubble = true;
         }
-    }
-  gui = new dat.GUI();
+      }
+      gui = new dat.GUI();
 
   //folder1
   var folder1 = gui.addFolder('Controls');
