@@ -18,7 +18,7 @@ function draw(){
     maxLife = options.Length;
     for(var i = 1; i < options.Nums; i++){
         var iterations = map(i,0,options.Nums,5,1);
-        var radius = map(i,0,options.Nums,options.MinRadius,options.MaxRadius);
+        var radius = options.Size;
         
         particles[i].move(iterations);
         particles[i].checkEdge();
